@@ -11,6 +11,7 @@
 		0679D75C299EDF580076810A /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0679D75B299EDF580076810A /* ContentView.swift */; };
 		0679D75E299EDF590076810A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0679D75D299EDF590076810A /* Assets.xcassets */; };
 		0679D761299EDF590076810A /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0679D760299EDF590076810A /* Preview Assets.xcassets */; };
+		0679D769299EE7120076810A /* BlinkyMOdel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0679D768299EE7120076810A /* BlinkyMOdel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -19,6 +20,8 @@
 		0679D75B299EDF580076810A /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		0679D75D299EDF590076810A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		0679D760299EDF590076810A /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		0679D767299EE5810076810A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		0679D768299EE7120076810A /* BlinkyMOdel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlinkyMOdel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -51,7 +54,9 @@
 		0679D758299EDF580076810A /* AirPark */ = {
 			isa = PBXGroup;
 			children = (
+				0679D767299EE5810076810A /* Info.plist */,
 				0679D759299EDF580076810A /* AirParkApp.swift */,
+				0679D768299EE7120076810A /* BlinkyMOdel.swift */,
 				0679D75B299EDF580076810A /* ContentView.swift */,
 				0679D75D299EDF590076810A /* Assets.xcassets */,
 				0679D75F299EDF590076810A /* Preview Content */,
@@ -139,6 +144,7 @@
 			files = (
 				0679D75C299EDF580076810A /* ContentView.swift in Sources */,
 				0679D75A299EDF580076810A /* AirParkApp.swift in Sources */,
+				0679D769299EE7120076810A /* BlinkyMOdel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -270,6 +276,9 @@
 				DEVELOPMENT_TEAM = DHX4DPP22G;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = AirPark/Info.plist;
+				INFOPLIST_KEY_NSBluetoothAlwaysUsageDescription = "Grant Bluetooth access";
+				INFOPLIST_KEY_NSBluetoothPeripheralUsageDescription = "Can this app communicate with Bluetooth peripherals?";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -299,6 +308,9 @@
 				DEVELOPMENT_TEAM = DHX4DPP22G;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = AirPark/Info.plist;
+				INFOPLIST_KEY_NSBluetoothAlwaysUsageDescription = "Grant Bluetooth access";
+				INFOPLIST_KEY_NSBluetoothPeripheralUsageDescription = "Can this app communicate with Bluetooth peripherals?";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
