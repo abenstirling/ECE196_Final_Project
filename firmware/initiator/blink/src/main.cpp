@@ -1,13 +1,25 @@
 #include <Arduino.h>
-
+#include <BLEDevice.h>
+#include <BLEUtils.h>
+#include <BLEServer.h>
+#include <string.h>
 #include "dw3000.h"
 
 #define APP_NAME "SS TWR INIT v1.0"
+
+// For A board
+#define SERVICE_UUID        "4fafc201-1fb5-459e-8fcc-c5c9c331914b"
+#define CHARACTERISTIC_UUID "beb5483e-36e1-4688-b7f5-ea07361b26a8"
+
+//#define LED_PIN 24
 
 // connection pins
 const uint8_t PIN_RST = 27; // reset pin
 const uint8_t PIN_IRQ = 34; // irq pin
 const uint8_t PIN_SS = 5; // spi select pin
+
+// fake constant hehe
+double GLOBAL_DISTANCE = 0;
 
 /* Default communication configuration. We use default non-STS DW mode. */
 static dwt_config_t config = {
@@ -87,7 +99,55 @@ static double distance;
  * temperature. These values can be calibrated prior to taking reference measurements. See NOTE 2 below. */
 extern dwt_txconfig_t txconfig_options;
 
+/* Bluetooth Classes*/
+class ServerCallbacks: public BLEServerCallbacks {
+  void onDisconnect(BLEServer* pServer) {
+    BLEDevice::startAdvertising();
+  }
+};
+
+class LEDCallbacks: public BLECharacteristicCallbacks {
+  void onWrite(BLECharacteristic *pCharacteristic) {
+    Serial.println(*(pCharacteristic->getData()));
+    //digitalWrite(LED_PIN, *(pCharacteristic->getData()));
+  }
+
+  void onRead(BLECharacteristic *pCharacteristic) {
+    pCharacteristic->setValue(String(GLOBAL_DISTANCE).c_str());
+    //pCharacteristic->notify();
+  }
+};
+
 void setup() {
+  Serial.begin(115200);
+  Serial.println("Starting BLE work!");
+
+  //pinMode(LED_PIN, OUTPUT);
+
+  BLEDevice::init("Blinkytooth");
+  BLEServer *pServer = BLEDevice::createServer();
+  pServer->setCallbacks(new ServerCallbacks());
+
+  BLEService *pService = pServer->createService(SERVICE_UUID);
+  BLECharacteristic *pCharacteristic = pService->createCharacteristic(
+                                         CHARACTERISTIC_UUID,
+                                         BLECharacteristic::PROPERTY_READ |
+                                         BLECharacteristic::PROPERTY_WRITE
+                                       );
+  pCharacteristic->setCallbacks(new LEDCallbacks());
+
+  *(pCharacteristic->getData()) = 0;
+  pService->start();
+  // BLEAdvertising *pAdvertising = pServer->getAdvertising();  // this still is working for backward compatibility
+  BLEAdvertising *pAdvertising = BLEDevice::getAdvertising();
+  pAdvertising->addServiceUUID(SERVICE_UUID);
+  pAdvertising->setScanResponse(true);
+  pAdvertising->setMinPreferred(0x06);  // functions that help with iPhone connections issue
+  pAdvertising->setMinPreferred(0x12);
+  BLEDevice::startAdvertising();
+  Serial.println("Characteristic defined! Now you can read it in your phone!");
+
+
   UART_init();
   test_run_info((unsigned char *)APP_NAME);
 
@@ -201,6 +261,7 @@ void loop() {
                     /* Display computed distance on LCD. */
                     // snprintf(dist_str, sizeof(dist_str), "DIST: %3.2f m", distance);
                     Serial.println(distance);
+                    GLOBAL_DISTANCE = distance;
                     //UART_puts("DISTANCE FOUND\r\n");
                     Serial.println("found");
                     
