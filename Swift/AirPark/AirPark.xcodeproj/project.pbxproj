@@ -12,6 +12,7 @@
 		0679D75E299EDF590076810A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0679D75D299EDF590076810A /* Assets.xcassets */; };
 		0679D761299EDF590076810A /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0679D760299EDF590076810A /* Preview Assets.xcassets */; };
 		0679D769299EE7120076810A /* BlinkyMOdel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0679D768299EE7120076810A /* BlinkyMOdel.swift */; };
+		CEEC814229B7F946007110E6 /* DistanceModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEEC814129B7F946007110E6 /* DistanceModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -22,6 +23,7 @@
 		0679D760299EDF590076810A /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		0679D767299EE5810076810A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		0679D768299EE7120076810A /* BlinkyMOdel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlinkyMOdel.swift; sourceTree = "<group>"; };
+		CEEC814129B7F946007110E6 /* DistanceModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DistanceModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -58,6 +60,7 @@
 				0679D759299EDF580076810A /* AirParkApp.swift */,
 				0679D768299EE7120076810A /* BlinkyMOdel.swift */,
 				0679D75B299EDF580076810A /* ContentView.swift */,
+				CEEC814129B7F946007110E6 /* DistanceModel.swift */,
 				0679D75D299EDF590076810A /* Assets.xcassets */,
 				0679D75F299EDF590076810A /* Preview Content */,
 			);
@@ -143,6 +146,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				0679D75C299EDF580076810A /* ContentView.swift in Sources */,
+				CEEC814229B7F946007110E6 /* DistanceModel.swift in Sources */,
 				0679D75A299EDF580076810A /* AirParkApp.swift in Sources */,
 				0679D769299EE7120076810A /* BlinkyMOdel.swift in Sources */,
 			);
@@ -273,7 +277,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"AirPark/Preview Content\"";
-				DEVELOPMENT_TEAM = DHX4DPP22G;
+				DEVELOPMENT_TEAM = 8A5VTK243D;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = AirPark/Info.plist;
@@ -305,7 +309,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"AirPark/Preview Content\"";
-				DEVELOPMENT_TEAM = DHX4DPP22G;
+				DEVELOPMENT_TEAM = 8A5VTK243D;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = AirPark/Info.plist;

@@ -1,15 +1,15 @@
 //
-//  BlinkyModel.swift
-//  Blinkytooth
+//  DistanceModel.swift
+//  DistanceModel
 //
-//  Created by Ben Stirling on 2/14/23.
+//  Created by Jad Ariss on 3/7/23.
 //
 
 import Foundation
 import CoreBluetooth
 import SwiftUI
 
-class BlinkyModel: NSObject, ObservableObject, CBPeripheralDelegate, CBCentralManagerDelegate {
+class DistanceModel: NSObject, ObservableObject, CBPeripheralDelegate, CBCentralManagerDelegate {
   
   //
   var centralManager: CBCentralManager!
@@ -25,6 +25,8 @@ class BlinkyModel: NSObject, ObservableObject, CBPeripheralDelegate, CBCentralMa
   @Published var connected: Bool = false
   @Published var loaded: Bool = false
   @Published var ledState: Bool = false
+  
+  @Published var distance: String = "No Data"
   
   override init() {
     super.init()
@@ -93,26 +95,29 @@ class BlinkyModel: NSObject, ObservableObject, CBPeripheralDelegate, CBCentralMa
       if characteristic.uuid == CHARACTERISTIC_UUID {
         self.characteristic = characteristic
         self.loaded = true
-        read()
+        DispatchQueue.global().async {
+          self.updatePeriodic()
+        }
       }
       
     }
   }
   
   func peripheral(_ peripheral: CBPeripheral, didUpdateValueFor characteristic: CBCharacteristic, error: Error?) {
-    let data: UInt8 = characteristic.value!.withUnsafeBytes({ rawPtr in
-      return rawPtr.load(as: UInt8.self)
-    })
-    
-    ledState = data == 0 ? false : true
-    
+    let distance = characteristic.value!
+    let distanceString = String(decoding: distance, as: UTF8.self)
+    DispatchQueue.main.async {
+      self.distance = distanceString
+    }
+    print("updated distance")
   }
   
-  func read() {
-    peripheral!.readValue(for: characteristic!)
+  private func updatePeriodic() {
+    while connected {
+      Thread.sleep(forTimeInterval: 0.25)
+      
+      self.peripheral?.readValue(for: characteristic!)
+    }
   }
   
-  func write(value: Bool) {
-    peripheral!.writeValue(Data([ledState ? 1 : 0]), for: characteristic!, type: .withResponse)
-  }
 }

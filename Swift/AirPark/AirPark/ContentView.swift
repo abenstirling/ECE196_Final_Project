@@ -8,19 +8,19 @@
 import SwiftUI
 
 struct ContentView: View {
-  @StateObject var led: BlinkyModel = BlinkyModel()
+  //@StateObject var led: BlinkyModel = BlinkyModel()
+ @StateObject var distance: DistanceModel = DistanceModel()
   var body: some View {
     VStack {
-      if !led.loaded {
+      if !distance.loaded {
         ProgressView()
-
-        Text(led.connected ? "Loading..." : "Searching...")
+        
+        Text(distance.connected ? "Loading..." : "Searching...")
       } else {
-        List {
-          Toggle("LED", isOn: $led.ledState)
-            .onChange(of: led.ledState) { newValue in
-              led.write(value: newValue)
-            }
+        if let double = distance.distance {
+          Text("Received double: \(double)")
+        } else {
+          Text("Waiting for data...")
         }
       }
     }
