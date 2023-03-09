@@ -18,7 +18,13 @@ struct ContentView: View {
         Text(distance.connected ? "Loading..." : "Searching...")
       } else {
         if let double = distance.distance {
-          Text("Received double: \(double)")
+          let value: Double = Double(double)!
+          
+          Circle()
+            .stroke(style: StrokeStyle(lineWidth: 8))
+            .frame(width: 75 * value, height: 75 * value)
+            .animation(.spring(), value: value)
+          
         } else {
           Text("Waiting for data...")
         }

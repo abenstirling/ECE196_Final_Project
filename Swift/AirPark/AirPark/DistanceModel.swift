@@ -26,7 +26,7 @@ class DistanceModel: NSObject, ObservableObject, CBPeripheralDelegate, CBCentral
   @Published var loaded: Bool = false
   @Published var ledState: Bool = false
   
-  @Published var distance: String = "No Data"
+  @Published var distance: String = "0"
   
   override init() {
     super.init()
@@ -114,7 +114,7 @@ class DistanceModel: NSObject, ObservableObject, CBPeripheralDelegate, CBCentral
   
   private func updatePeriodic() {
     while connected {
-      Thread.sleep(forTimeInterval: 0.25)
+      Thread.sleep(forTimeInterval: 0.05)
       
       self.peripheral?.readValue(for: characteristic!)
     }
