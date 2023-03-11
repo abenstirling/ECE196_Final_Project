@@ -113,7 +113,7 @@ class DistanceModel: NSObject, ObservableObject, CBPeripheralDelegate, CBCentral
   
   private func updatePeriodic() {
     while connected {
-      Thread.sleep(forTimeInterval: 0.05)
+      Thread.sleep(forTimeInterval: 0.75)
       
       self.peripheral?.readValue(for: characteristic!)
     }

@@ -31,32 +31,26 @@ struct ContentView: View {
             CalibrationHelperView(offset: $offset)
           }
           .padding(.top)
-          Button(){
-            HapticManager.instance.notification(type: .error)
-          }label:{
-            Image(systemName: "exclamationmark.octagon")
-          }
         }
         if let double = distance.distance {
           let value: Double = Double(double)!
           Spacer()
           if let offset{
             let circValue: Double = distance.calcCircleValue(offset: offset)
-            if circValue >= 0.5{
+            if circValue >= 1{
               Circle()
                 .stroke(style: StrokeStyle(lineWidth: 8))
                 .frame(width: 75 * max(0, value), height: 75 * max(0, value))
                 .animation(.spring(), value: value)
-            }else if circValue < 0.5 && circValue
-            > 0{
+            }else if circValue < 1 && circValue >= 0{
               Circle()
                 .stroke(style: StrokeStyle(lineWidth: 8))
                 .frame(width: 75 * max(0, value), height: 75 * max(0, value))
                 .animation(.spring(), value: value)
                 .foregroundColor(Color.green)
-                .onChange(of: circValue) { newValue in if circValue < 0.5 && circValue > 0 {
+                .onChange(of: circValue) { newValue in if circValue < 1 && circValue > 0 {
                   HapticManager.instance.notification(type: .error)
-                  AudioServicesPlaySystemSound(1023)
+                  AudioServicesPlayAlertSound(1322)
                 }}
             }else{
               Circle()
@@ -64,6 +58,10 @@ struct ContentView: View {
                 .frame(width: 75 * max(0, value), height: 75 * max(0, value))
                 .animation(.spring(), value: value)
                 .foregroundColor(Color.red)
+                .onChange(of: circValue) { newValue in if circValue < 0 {
+                  HapticManager.instance.notification(type: .warning)
+                  AudioServicesPlayAlertSound(1304)
+                }}
             }
           }else{
             Circle()
@@ -72,9 +70,13 @@ struct ContentView: View {
               .animation(.spring(), value: value)
           }
           Spacer()
-          Text("\(value * 3.281, specifier: "%.2f") ft.")
-            .font(.headline)
-          
+//          if isCalibrated {
+//            Text("\(distance.calcCircleValue(offset: offset!), specifier: "%.2f") ft.")
+//              .font(.headline)
+//          }else{
+            Text("\(value * 3.281, specifier: "%.2f") ft.")
+              .font(.headline)
+//          }
         } else {
           Text("Waiting for data...")
         }
