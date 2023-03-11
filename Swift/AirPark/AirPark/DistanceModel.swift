@@ -24,7 +24,6 @@ class DistanceModel: NSObject, ObservableObject, CBPeripheralDelegate, CBCentral
   // These inform the UI what state the bluetooth is in
   @Published var connected: Bool = false
   @Published var loaded: Bool = false
-  @Published var ledState: Bool = false
   
   @Published var distance: String = "0"
   
@@ -114,10 +113,14 @@ class DistanceModel: NSObject, ObservableObject, CBPeripheralDelegate, CBCentral
   
   private func updatePeriodic() {
     while connected {
-      Thread.sleep(forTimeInterval: 0.05)
+      //Thread.sleep(forTimeInterval: 0.01)
       
       self.peripheral?.readValue(for: characteristic!)
     }
+  }
+  
+  func calcCircleValue(offset: Double) -> Double{
+    return (Double(distance)! * 3.281) - offset
   }
   
 }
