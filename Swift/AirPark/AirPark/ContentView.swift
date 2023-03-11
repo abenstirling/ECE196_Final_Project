@@ -42,6 +42,9 @@ struct ContentView: View {
                 .stroke(style: StrokeStyle(lineWidth: 8))
                 .frame(width: 75 * max(0, value), height: 75 * max(0, value))
                 .animation(.spring(), value: value)
+              Spacer()
+              Text("\(distance.calcCircleValue(offset: offset), specifier: "%.2f") ft.")
+                .font(.headline)
             }else if circValue < 1 && circValue >= 0{
               Circle()
                 .stroke(style: StrokeStyle(lineWidth: 8))
@@ -52,6 +55,9 @@ struct ContentView: View {
                   HapticManager.instance.notification(type: .error)
                   AudioServicesPlayAlertSound(1322)
                 }}
+              Spacer()
+              Text("\(distance.calcCircleValue(offset: offset), specifier: "%.2f") ft.")
+                .font(.headline)
             }else{
               Circle()
                 .stroke(style: StrokeStyle(lineWidth: 8))
@@ -62,21 +68,19 @@ struct ContentView: View {
                   HapticManager.instance.notification(type: .warning)
                   AudioServicesPlayAlertSound(1304)
                 }}
+              Spacer()
+              Text("\(distance.calcCircleValue(offset: offset), specifier: "%.2f") ft.")
+                .font(.headline)
             }
           }else{
             Circle()
               .stroke(style: StrokeStyle(lineWidth: 8))
               .frame(width: 75 * max(0, value), height: 75 * max(0, value))
               .animation(.spring(), value: value)
-          }
-          Spacer()
-//          if isCalibrated {
-//            Text("\(distance.calcCircleValue(offset: offset!), specifier: "%.2f") ft.")
-//              .font(.headline)
-//          }else{
+            Spacer()
             Text("\(value * 3.281, specifier: "%.2f") ft.")
               .font(.headline)
-//          }
+          }
         } else {
           Text("Waiting for data...")
         }
