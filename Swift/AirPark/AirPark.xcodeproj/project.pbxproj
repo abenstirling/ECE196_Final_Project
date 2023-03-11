@@ -12,6 +12,8 @@
 		0679D75E299EDF590076810A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0679D75D299EDF590076810A /* Assets.xcassets */; };
 		0679D761299EDF590076810A /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0679D760299EDF590076810A /* Preview Assets.xcassets */; };
 		0679D769299EE7120076810A /* BlinkyMOdel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0679D768299EE7120076810A /* BlinkyMOdel.swift */; };
+		CE4453DA29BCEC1E004B4F46 /* CalibrationHelperView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE4453D929BCEC1E004B4F46 /* CalibrationHelperView.swift */; };
+		CE4453DC29BCF207004B4F46 /* HapticManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE4453DB29BCF207004B4F46 /* HapticManager.swift */; };
 		CEEC814229B7F946007110E6 /* DistanceModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEEC814129B7F946007110E6 /* DistanceModel.swift */; };
 /* End PBXBuildFile section */
 
@@ -23,6 +25,8 @@
 		0679D760299EDF590076810A /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		0679D767299EE5810076810A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		0679D768299EE7120076810A /* BlinkyMOdel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlinkyMOdel.swift; sourceTree = "<group>"; };
+		CE4453D929BCEC1E004B4F46 /* CalibrationHelperView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalibrationHelperView.swift; sourceTree = "<group>"; };
+		CE4453DB29BCF207004B4F46 /* HapticManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HapticManager.swift; sourceTree = "<group>"; };
 		CEEC814129B7F946007110E6 /* DistanceModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DistanceModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -61,6 +65,8 @@
 				0679D768299EE7120076810A /* BlinkyMOdel.swift */,
 				0679D75B299EDF580076810A /* ContentView.swift */,
 				CEEC814129B7F946007110E6 /* DistanceModel.swift */,
+				CE4453DB29BCF207004B4F46 /* HapticManager.swift */,
+				CE4453D929BCEC1E004B4F46 /* CalibrationHelperView.swift */,
 				0679D75D299EDF590076810A /* Assets.xcassets */,
 				0679D75F299EDF590076810A /* Preview Content */,
 			);
@@ -146,8 +152,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				0679D75C299EDF580076810A /* ContentView.swift in Sources */,
+				CE4453DA29BCEC1E004B4F46 /* CalibrationHelperView.swift in Sources */,
 				CEEC814229B7F946007110E6 /* DistanceModel.swift in Sources */,
 				0679D75A299EDF580076810A /* AirParkApp.swift in Sources */,
+				CE4453DC29BCF207004B4F46 /* HapticManager.swift in Sources */,
 				0679D769299EE7120076810A /* BlinkyMOdel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

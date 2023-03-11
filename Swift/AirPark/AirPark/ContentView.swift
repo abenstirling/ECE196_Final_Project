@@ -7,37 +7,11 @@
 
 import SwiftUI
 
-struct CalibrationHelperView: View{
-  @Environment(\.dismiss) var dismiss
-  @Binding var offset: Double?
-  @Binding var isOffset: Bool
-  
-  var body: some View{
-    VStack{
-      TextField("Distance From Wall (ft.): ", value: $offset, format: .number)
-        .padding()
-        .background(Color.gray.opacity(0.3).cornerRadius(10))
-        .font(.headline)
-      Button(action: {
-          dismiss()
-          isOffset = true
-      }, label: {
-          Text("Enter")
-          .padding()
-          .frame(maxWidth: .infinity)
-          .background(Color.blue.cornerRadius(10))
-          .foregroundColor(.white)
-          .font(.headline)
-      })
-    }
-  }
-}
-
 struct ContentView: View {
   @StateObject var distance: DistanceModel = DistanceModel()
   @AppStorage("offset") var offset: Double?
   @State private var isCalibrated = false
-  @State private var isOffset = false
+
   
   var body: some View {
     VStack {
@@ -54,38 +28,44 @@ struct ContentView: View {
           }
           .font(.system(size: 60))
           .fullScreenCover(isPresented: $isCalibrated) {
-            CalibrationHelperView(offset: $offset, isOffset: $isOffset)
+            CalibrationHelperView(offset: $offset)
           }
           .padding(.top)
-          Spacer()
+          Button(){
+            HapticManager.instance.notification(type: .error)
+          }label:{
+            Image(systemName: "exclamationmark.octagon")
+          }
         }
         if let double = distance.distance {
           let value: Double = Double(double)!
           Spacer()
-          if isOffset{
-            let circValue: Double = distance.calcCircleValue(offset: offset!)
+          if let offset{
+            let circValue: Double = distance.calcCircleValue(offset: offset)
             if circValue > 0.0{
               Circle()
                 .stroke(style: StrokeStyle(lineWidth: 8))
-                .frame(width: 75 * value, height: 75 * value)
+                .frame(width: 75 * max(0, value), height: 75 * max(0, value))
                 .animation(.spring(), value: value)
-            }else if circValue == 0.0{
+            }else if circValue == 0.0{//circValue/12 < 6.0{
               Circle()
                 .stroke(style: StrokeStyle(lineWidth: 8))
-                .frame(width: 75 * value, height: 75 * value)
+                .frame(width: 75 * max(0, value), height: 75 * max(0, value))
                 .animation(.spring(), value: value)
                 .foregroundColor(Color.green)
             }else{
               Circle()
                 .stroke(style: StrokeStyle(lineWidth: 8))
-                .frame(width: 75 * value, height: 75 * value)
+                .frame(width: 75 * max(0, value), height: 75 * max(0, value))
                 .animation(.spring(), value: value)
                 .foregroundColor(Color.red)
+                .onChange(of: offset) { newValue in if circValue < 0 {
+                  HapticManager.instance.notification(type: .error)}}
             }
           }else{
             Circle()
               .stroke(style: StrokeStyle(lineWidth: 8))
-              .frame(width: 75 * value, height: 75 * value)
+              .frame(width: 75 * max(0, value), height: 75 * max(0, value))
               .animation(.spring(), value: value)
           }
           Spacer()
