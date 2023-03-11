@@ -7,9 +7,37 @@
 
 import SwiftUI
 
+struct FullScreenModalView: View{
+  @Environment(\.dismiss) var dismiss
+  @Binding var offset: Double?
+  @State private var offsetStr: String = ""
+  
+  var body: some View{
+    VStack{
+      let offsetStr = "\(offset ?? 0)"
+      TextField("Distance From Wall (ft.): ", text: $offsetStr)
+        .padding()
+        .background(Color.gray.opacity(0.3).cornerRadius(10))
+        .font(.headline)
+      Button(action: {
+          dismiss()
+      }, label: {
+          Text("Enter")
+          .padding()
+          .frame(maxWidth: .infinity)
+          .background(Color.blue.cornerRadius(10))
+          .foregroundColor(.white)
+          .font(.headline)
+      })
+    }
+  }
+}
+
 struct ContentView: View {
-  //@StateObject var led: BlinkyModel = BlinkyModel()
- @StateObject var distance: DistanceModel = DistanceModel()
+  @StateObject var distance: DistanceModel = DistanceModel()
+  @AppStorage("offset") var offset: Double?
+  @State private var isCalibrated = false
+  
   var body: some View {
     VStack {
       if !distance.loaded {
@@ -17,13 +45,30 @@ struct ContentView: View {
         
         Text(distance.connected ? "Loading..." : "Searching...")
       } else {
+        HStack {
+          Button(){
+            isCalibrated.toggle()
+          }label: {
+            Image(systemName: "car.circle.fill")
+          }
+          .font(.system(size: 60))
+          .fullScreenCover(isPresented: $isCalibrated) {
+            FullScreenModalView(offset: $offset)
+          }
+          Spacer()
+        }
         if let double = distance.distance {
           let value: Double = Double(double)!
-          
+          Spacer()
           Circle()
             .stroke(style: StrokeStyle(lineWidth: 8))
             .frame(width: 75 * value, height: 75 * value)
             .animation(.spring(), value: value)
+          Spacer()
+          
+          
+          Spacer()
+          Text("\(value * 3.281, specifier: "%.2f") ft.")
           
         } else {
           Text("Waiting for data...")
