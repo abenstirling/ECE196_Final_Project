@@ -6,12 +6,12 @@
 //
 
 import SwiftUI
+import AVFoundation
 
 struct ContentView: View {
   @StateObject var distance: DistanceModel = DistanceModel()
   @AppStorage("offset") var offset: Double?
   @State private var isCalibrated = false
-
   
   var body: some View {
     VStack {
@@ -42,25 +42,28 @@ struct ContentView: View {
           Spacer()
           if let offset{
             let circValue: Double = distance.calcCircleValue(offset: offset)
-            if circValue > 0.0{
+            if circValue >= 0.5{
               Circle()
                 .stroke(style: StrokeStyle(lineWidth: 8))
                 .frame(width: 75 * max(0, value), height: 75 * max(0, value))
                 .animation(.spring(), value: value)
-            }else if circValue == 0.0{//circValue/12 < 6.0{
+            }else if circValue < 0.5 && circValue
+            > 0{
               Circle()
                 .stroke(style: StrokeStyle(lineWidth: 8))
                 .frame(width: 75 * max(0, value), height: 75 * max(0, value))
                 .animation(.spring(), value: value)
                 .foregroundColor(Color.green)
+                .onChange(of: circValue) { newValue in if circValue < 0.5 && circValue > 0 {
+                  HapticManager.instance.notification(type: .error)
+                  AudioServicesPlaySystemSound(1023)
+                }}
             }else{
               Circle()
                 .stroke(style: StrokeStyle(lineWidth: 8))
                 .frame(width: 75 * max(0, value), height: 75 * max(0, value))
                 .animation(.spring(), value: value)
                 .foregroundColor(Color.red)
-                .onChange(of: offset) { newValue in if circValue < 0 {
-                  HapticManager.instance.notification(type: .error)}}
             }
           }else{
             Circle()
