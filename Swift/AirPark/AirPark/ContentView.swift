@@ -37,41 +37,61 @@ struct ContentView: View {
           Spacer()
           if let offset{
             let circValue: Double = distance.calcCircleValue(offset: offset)
-            if circValue >= 1{
-              Circle()
-                .stroke(style: StrokeStyle(lineWidth: 8))
-                .frame(width: 75 * max(0, value), height: 75 * max(0, value))
-                .animation(.spring(), value: value)
-              Spacer()
-              Text("\(distance.calcCircleValue(offset: offset), specifier: "%.2f") ft.")
-                .font(.headline)
-            }else if circValue < 1 && circValue >= 0{
-              Circle()
-                .stroke(style: StrokeStyle(lineWidth: 8))
-                .frame(width: 75 * max(0, value), height: 75 * max(0, value))
-                .animation(.spring(), value: value)
-                .foregroundColor(Color.green)
-                .onChange(of: circValue) { newValue in if circValue < 1 && circValue > 0 {
-                  HapticManager.instance.notification(type: .error)
-                  AudioServicesPlayAlertSound(1322)
-                }}
-              Spacer()
-              Text("\(distance.calcCircleValue(offset: offset), specifier: "%.2f") ft.")
-                .font(.headline)
-            }else{
-              Circle()
-                .stroke(style: StrokeStyle(lineWidth: 8))
-                .frame(width: 75 * max(0, value), height: 75 * max(0, value))
-                .animation(.spring(), value: value)
-                .foregroundColor(Color.red)
-                .onChange(of: circValue) { newValue in if circValue < 0 {
-                  HapticManager.instance.notification(type: .warning)
-                  AudioServicesPlayAlertSound(1304)
-                }}
-              Spacer()
-              Text("\(distance.calcCircleValue(offset: offset), specifier: "%.2f") ft.")
-                .font(.headline)
+//            if circValue >= 1{
+//              Circle()
+//                .stroke(style: StrokeStyle(lineWidth: 8))
+//                .frame(width: 75 * max(0, value), height: 75 * max(0, value))
+//                .foregroundColor(circValue >= 1 ? .white : circValue < 1 && circValue >= 0 ? .green : .red )
+//                .animation(.spring(), value: value)
+//              Spacer()
+//              Text("\(distance.calcCircleValue(offset: offset), specifier: "%.2f") ft.")
+//                .font(.headline)
+//            }else if circValue < 1 && circValue >= 0{
+//              Circle()
+//                .stroke(style: StrokeStyle(lineWidth: 8))
+//                .frame(width: 75 * max(0, value), height: 75 * max(0, value))
+//                .animation(.spring(), value: value)
+//                .foregroundColor(Color.green)
+//                .onChange(of: circValue) { newValue in if circValue < 1 && circValue > 0 {
+//                  HapticManager.instance.notification(type: .error)
+//                  AudioServicesPlayAlertSound(1322)
+//                }}
+//              Spacer()
+//              Text("\(distance.calcCircleValue(offset: offset), specifier: "%.2f") ft.")
+//                .font(.headline)
+//            }else{
+//              Circle()
+//                .stroke(style: StrokeStyle(lineWidth: 8))
+//                .frame(width: 75 * max(0, value), height: 75 * max(0, value))
+//                .animation(.spring(), value: value)
+//                .foregroundColor(Color.red)
+//                .onChange(of: circValue) { newValue in if circValue < 0 {
+//                  HapticManager.instance.notification(type: .warning)
+//                  AudioServicesPlayAlertSound(1304)
+//                }}
+//              Spacer()
+//              Text("\(distance.calcCircleValue(offset: offset), specifier: "%.2f") ft.")
+//                .font(.headline)
+//            }
+            Circle()
+              .stroke(style: StrokeStyle(lineWidth: 8))
+              .frame(width: 75 * max(0, value), height: 75 * max(0, value))
+              .foregroundColor(circValue >= 1 ? .white : circValue < 1 && circValue >= 0 ? .green : .red )
+              .animation(.spring(), value: value)
+            Spacer()
+            
+            Group {
+              if circValue < 0 {
+                Text("REVERSE!")
+                  .font(.largeTitle)
+                  .bold()
+              }
             }
+            .animation(.spring(), value: circValue)
+            
+            Text("\(distance.calcCircleValue(offset: offset), specifier: "%.2f") ft.")
+              .font(.system(size: circValue >= 0 ? 24 : 72))
+              .animation(.spring(), value: circValue)
           }else{
             Circle()
               .stroke(style: StrokeStyle(lineWidth: 8))
