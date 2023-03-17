@@ -5,8 +5,8 @@
 //  Created by User on 2/14/23.
 //
 
-import SwiftUI
 import AVFoundation
+import SwiftUI
 
 struct ContentView: View {
   @StateObject var distance: DistanceModel = DistanceModel()
@@ -37,49 +37,21 @@ struct ContentView: View {
           Spacer()
           if let offset{
             let circValue: Double = distance.calcCircleValue(offset: offset)
-//            if circValue >= 1{
-//              Circle()
-//                .stroke(style: StrokeStyle(lineWidth: 8))
-//                .frame(width: 75 * max(0, value), height: 75 * max(0, value))
-//                .foregroundColor(circValue >= 1 ? .white : circValue < 1 && circValue >= 0 ? .green : .red )
-//                .animation(.spring(), value: value)
-//              Spacer()
-//              Text("\(distance.calcCircleValue(offset: offset), specifier: "%.2f") ft.")
-//                .font(.headline)
-//            }else if circValue < 1 && circValue >= 0{
-//              Circle()
-//                .stroke(style: StrokeStyle(lineWidth: 8))
-//                .frame(width: 75 * max(0, value), height: 75 * max(0, value))
-//                .animation(.spring(), value: value)
-//                .foregroundColor(Color.green)
-//                .onChange(of: circValue) { newValue in if circValue < 1 && circValue > 0 {
-//                  HapticManager.instance.notification(type: .error)
-//                  AudioServicesPlayAlertSound(1322)
-//                }}
-//              Spacer()
-//              Text("\(distance.calcCircleValue(offset: offset), specifier: "%.2f") ft.")
-//                .font(.headline)
-//            }else{
-//              Circle()
-//                .stroke(style: StrokeStyle(lineWidth: 8))
-//                .frame(width: 75 * max(0, value), height: 75 * max(0, value))
-//                .animation(.spring(), value: value)
-//                .foregroundColor(Color.red)
-//                .onChange(of: circValue) { newValue in if circValue < 0 {
-//                  HapticManager.instance.notification(type: .warning)
-//                  AudioServicesPlayAlertSound(1304)
-//                }}
-//              Spacer()
-//              Text("\(distance.calcCircleValue(offset: offset), specifier: "%.2f") ft.")
-//                .font(.headline)
-//            }
+            
             Circle()
               .stroke(style: StrokeStyle(lineWidth: 8))
               .frame(width: 75 * max(0, value), height: 75 * max(0, value))
               .foregroundColor(circValue >= 1 ? .white : circValue < 1 && circValue >= 0 ? .green : .red )
               .animation(.spring(), value: value)
+              .onChange(of: circValue) { newValue in if circValue < 1 && circValue > 0 {
+                HapticManager.instance.notification(type: .error)
+                AudioServicesPlayAlertSound(1322)
+              } else if circValue < 0{
+                HapticManager.instance.notification(type: .warning)
+                AudioServicesPlayAlertSound(1304)
+              }}
             Spacer()
-            
+                        
             Group {
               if circValue < 0 {
                 Text("REVERSE!")

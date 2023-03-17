@@ -122,5 +122,4 @@ class DistanceModel: NSObject, ObservableObject, CBPeripheralDelegate, CBCentral
   func calcCircleValue(offset: Double) -> Double{
     return (Double(distance)! * 3.281) - offset
   }
-  
 }
